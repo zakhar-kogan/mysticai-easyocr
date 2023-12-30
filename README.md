@@ -1,0 +1,1 @@
+# mysticai-easyocr

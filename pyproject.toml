@@ -1,0 +1,23 @@
+[project]
+name = "mysticai-easyocr"
+version = "0.1.0"
+description = "EasyOCR implementation for mystic.ai"
+authors = [
+    {name = "Zakhar Kogan", email = "36503576+zaharkogan@users.noreply.github.com"},
+]
+dependencies = [
+    "easyocr>=1.7.1",
+    "pipeline-ai>=1.0.26",
+    "torch>=2.1.2",
+    "opencv-python-headless>=4.8.1.78",
+]
+requires-python = "==3.10.*"
+readme = "README.md"
+license = {text = "MIT"}
+
+[tool.pdm]
+package-type = "application"
+
+[tool.pdm.scripts]
+start.cmd = "src/easyocr.py"
+start.env_file = ".env"
