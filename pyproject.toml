@@ -10,6 +10,7 @@ dependencies = [
     "pipeline-ai>=1.0.26",
     "torch>=2.1.2",
     "opencv-python-headless>=4.8.1.78",
+    "python-dotenv>=1.0.0",
 ]
 requires-python = "==3.10.*"
 readme = "README.md"

@@ -6,7 +6,9 @@ from pipeline.objects import File
 output = run_pipeline(
         "uriel/easyocr:v22",
         File(
+            # Telegram URL working
             # url="https://api.telegram.org/file/bot6678109627:AAFmbzFijiTcICi_dWSiFjeVuIiWbG9cjP8/photos/file_15.jpg"
+            # Local files
             path="tests/media/test.webp",
         )
     )

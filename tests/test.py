@@ -1,22 +1,23 @@
+# Imports
 import requests
-import base64
+import os
+from dotenv import load_dotenv
+
+# import base64
+
+# Getting the API key
+load_dotenv()
+api_key = os.getenv("API_KEY")
 
 # URL for the API endpoint
 url = 'https://www.mystic.ai/v3/runs'
 
-# Headers to be sent with the request
+# Headers
 headers = {
-    'Authorization': 'Bearer pipeline_sk_iIGN0tU7Jifjdmycp-gOVoqJyYjLAVQA',
-    # 'Authorization': 'Bearer YOUR_API_KEY',
+    'Authorization': f"Bearer {api_key}",
     'Content-Type': 'application/json'
 }
 
-path = "tests/ex.jpeg"
-file_name = path.split("/")[-1]
-print(file_name)
-with open(path, "rb") as imageFile:
-    data = base64.b64encode(imageFile.read()).decode('')
-    
 # Data payload for the POST request
 data = {
     "pipeline_id_or_pointer": "uriel/easyocr:v22",
@@ -24,9 +25,9 @@ data = {
     "input_data": [
         {
             "type": "file",
-            "value": data,
-            # "file_path": "https://api.telegram.org/file/bot6678109627:AAFmbzFijiTcICi_dWSiFjeVuIiWbG9cjP8/photos/file_15.jpg"
-            "file_path": ""
+            "value": "",
+            "file_path": "https://res.cloudinary.com/practicaldev/image/fetch/s--JHfhlxxt--/c_limit%2Cf_auto%2Cfl_progressive%2Cq_auto%2Cw_350/https://i.imgur.com/fYloAem.jpg"
+            # "file_path": "./media/test.webp" # Not working yet
         }
     ]
 }
@@ -42,3 +43,17 @@ else:
     print("Request failed")
     print("Status code:", response.status_code)
     print("Response:", response.text)
+
+# ------------------ #
+# File path for local testing (not working)
+path = "tests/media/test.webp"
+# file_name = path.split("/")[-1]
+# print(file_name)
+
+# # Base64 encoding for the image (not working)
+# def base_img(path: str) -> str:
+#     with open(path, "rb") as imageFile:
+#         img_base64 = base64.b64encode(imageFile.read()).decode()
+#     return img_base64
+
+# img = base_img(path)

@@ -87,12 +87,12 @@ my_env_name = f"{login}/{env}"
 # except Exception:
 #     pass
 
-pipelines.upload_pipeline(
-    my_pl,
-    my_pl_name,
-    environment_id_or_name=my_env_name,
-    required_gpu_vram_mb=5_000,
-    accelerators=[
-        compute_requirements.Accelerator.nvidia_t4,
-    ],
-)
+# pipelines.upload_pipeline(
+#     my_pl,
+#     my_pl_name,
+#     environment_id_or_name=my_env_name,
+#     required_gpu_vram_mb=5_000,
+#     accelerators=[
+#         compute_requirements.Accelerator.nvidia_t4,
+#     ],
+# )
