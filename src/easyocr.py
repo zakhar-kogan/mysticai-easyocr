@@ -1,16 +1,8 @@
-
-from io import BytesIO
-from PIL import Image
-from numpy import asarray
-
-from pipeline import File, Pipeline, Variable, entity, pipe
+from pipeline import File, Pipeline, Variable, entity, pipe, current_configuration
 from pipeline.cloud import compute_requirements, pipelines
 from pipeline.cloud.environments import create_environment
-from pipeline import current_configuration
 
 import easyocr
-import torch
-# import opencv_python_headless
 
 # Getting environment variables
 import os
@@ -22,9 +14,10 @@ import os
 
 current_configuration.set_debug_mode(True)
 
-login   = 'uriel'
-pl      = 'easyocr'
-env     = 'easyocr-env'
+login = 'uriel'
+pl = 'easyocr'
+env = 'easyocr-env'
+
 
 @entity
 class EasyOCRModel:
@@ -36,28 +29,41 @@ class EasyOCRModel:
         # this needs to run only once to load the model into memory
         import dill
         with model_file.path.open("rb") as file:
-          self.pipe = dill.load(file)
-        self.model = easyocr.Reader(['ru', 'en']) 
+            self.pipe = dill.load(file)
+
+        self.model_ru_en = easyocr.Reader(['ru', 'en'])
+        self.model_en = easyocr.Reader(['en'])
 
     @pipe
-    def predict(self, image: File) -> str:
-        raw_image = asarray(Image.open(BytesIO(image.path.read_bytes())))
-        out = self.model.readtext(raw_image, detail=0, paragraph=True)
+    def image2ru_en(self, image: File) -> str:
+        out = self.model_ru_en.readtext(image, detail=0, paragraph=True)
+        # out = self.model_ru_en.readtext(image) # in production
+        return out
+
+    @pipe
+    def image2en(self, image: File) -> str:
+        out = self.model_en.readtext(image, detail=0, paragraph=True)
+        # out = self.model_ru_en.readtext(image) # in production
         return out
 
 
 with Pipeline() as builder:
     image = Variable(
         File,
+        choices=['ru_en', 'en'],
         title="Image File",
         description="Upload a .png, .jpg or other image file to be captioned. You can also provide URL",
     )
-    
+
     model = EasyOCRModel()
-    my_file = File.from_object(model) # Create a file object
+    my_file = File.from_object(model)  # Create a file object
     model.load(my_file)
 
-    output = model.predict(image)
+    if choices == 'ru_en':
+        output = model.image2ru_en(image)
+    elif choices == 'en':
+        output = model.image2en(image)
+
     builder.output(output)
 
 # # Local testing
@@ -68,7 +74,7 @@ with Pipeline() as builder:
 # output = model.predict("example.jpeg")
 # print("Prediction:")
 # print(output)
-    
+
 my_pl = builder.get_pipeline()
 
 my_pl_name = f"{login}/{pl}"

@@ -20,14 +20,18 @@ headers = {
 
 # Data payload for the POST request
 data = {
-    "pipeline_id_or_pointer": "uriel/easyocr:v22",
+    "pipeline_id_or_pointer": "uriel/easyocr-r:v30",
     "async_run": False,
     "input_data": [
         {
             "type": "file",
             "value": "",
             "file_path": "https://res.cloudinary.com/practicaldev/image/fetch/s--JHfhlxxt--/c_limit%2Cf_auto%2Cfl_progressive%2Cq_auto%2Cw_350/https://i.imgur.com/fYloAem.jpg"
-            # "file_path": "./media/test.webp" # Not working yet
+            # "file_path": "tests/media/ex.jpeg" # Not working yet
+        },
+        {
+            "type": "string",
+            "value": "Russian"
         }
     ]
 }
