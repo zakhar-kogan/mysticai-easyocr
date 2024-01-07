@@ -3,6 +3,8 @@ from pipeline.cloud import compute_requirements, pipelines
 from pipeline.cloud.environments import create_environment
 
 import easyocr
+import numpy as np
+from PIL import Image
 
 # Getting environment variables
 import os
@@ -31,19 +33,17 @@ class EasyOCRModel:
         with model_file.path.open("rb") as file:
             self.pipe = dill.load(file)
 
-        self.model_ru_en = easyocr.Reader(['ru', 'en'])
-        self.model_en = easyocr.Reader(['en'])
+        self.model_ru_en = easyocr.Reader(['ru', 'en'], recognizer='Transformer')
+        self.model_en = easyocr.Reader(['en'], recognizer='Transformer')
 
     @pipe
     def image2ru_en(self, image: File) -> str:
-        out = self.model_ru_en.readtext(image, detail=0, paragraph=True)
-        # out = self.model_ru_en.readtext(image) # in production
+        out = self.model_ru_en.readtext(np.array(Image.open(image).convert('L')), paragraph=True)
         return out
 
     @pipe
     def image2en(self, image: File) -> str:
-        out = self.model_en.readtext(image, detail=0, paragraph=True)
-        # out = self.model_ru_en.readtext(image) # in production
+        out = self.model_en.readtext(np.array(Image.open(image).convert('L')), paragraph=True)
         return out
 
 
