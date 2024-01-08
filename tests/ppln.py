@@ -9,17 +9,10 @@ from pipeline.objects import File
 LANG_MAP = {
     "English": "en",
     "Russian": "ru",
-    "Spanish": "es",
-    "Portuguese": "pt",
-    "Uzbek": "uz",
-    "Arabic": "ar",
-    "Persian (Farsi)": "fa",
-    "German": "de",
-    "Indonesian": "id"
 }
 
 output = run_pipeline(
-        "uriel/easyocr-r:v30",
+        "uriel/easyocr:v36",
         File(
             # URL
             # url="https://api.telegram.org/file/bot6678109627:AAFmbzFijiTcICi_dWSiFjeVuIiWbG9cjP8/photos/file_15.jpg"
@@ -27,7 +20,7 @@ output = run_pipeline(
             path="tests/media/ex.jpeg",
         ),
         # Language
-        "Russian",
+        "ru",
         async_run=False
     )
 # Print output if it's not NoneType

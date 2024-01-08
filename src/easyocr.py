@@ -55,7 +55,7 @@ class EasyOCRModel:
         Performs optical character recognition (OCR) on the provided image file.
 
         Parameters:
-        image (File): This should be a .png, .jpg, or other image file; or a URL when calling the API.
+        image (File): This should be a .png, .jpg, or other image file; or a URL when calling by API.
         lang (str): The language to use for OCR. Can be either 'ru'/Russian or 'en'/English. Defaults to English.
 
         Returns:

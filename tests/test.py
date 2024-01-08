@@ -2,15 +2,14 @@
 import requests
 import os
 from dotenv import load_dotenv
-
-# import base64
+import mimetypes
 
 # Getting the API key
 load_dotenv()
-api_key = os.getenv("API_KEY")
-
-# URL for the API endpoint
-url = 'https://www.mystic.ai/v3/runs'
+if os.getenv("API_KEY"):
+    api_key = os.getenv("API_KEY")
+else:
+    api_key = "pipeline_sk_iIGN0tU7Jifjdmycp-gOVoqJyYjLAVQA"
 
 # Headers
 headers = {
@@ -18,46 +17,66 @@ headers = {
     'Content-Type': 'application/json'
 }
 
-# Data payload for the POST request
-data = {
-    "pipeline_id_or_pointer": "uriel/easyocr-r:v30",
-    "async_run": False,
-    "input_data": [
-        {
-            "type": "file",
-            "value": "",
-            "file_path": "https://res.cloudinary.com/practicaldev/image/fetch/s--JHfhlxxt--/c_limit%2Cf_auto%2Cfl_progressive%2Cq_auto%2Cw_350/https://i.imgur.com/fYloAem.jpg"
-            # "file_path": "tests/media/ex.jpeg" # Not working yet
-        },
-        {
-            "type": "string",
-            "value": "Russian"
+def upload_img(path: str) -> str:
+    upload_url = "https://www.mystic.ai/v3/pipeline_files"
+    img_name = os.path.basename(path)
+    mime = mimetypes.guess_type(path)[0]
+
+    if not os.path.exists(path):
+        raise FileNotFoundError(f"No file found at {path}")
+
+    if not mime:
+        raise ValueError(f"Could not determine MIME type for file {path}")
+
+    with open(path, "rb") as img_file:
+        files = { "pfile": (img_name, img_file, mime) }
+        headers = {
+            "accept": "application/json",
+            "authorization": "Bearer pipeline_sk_iIGN0tU7Jifjdmycp-gOVoqJyYjLAVQA"
         }
-    ]
-}
+        response = requests.post(upload_url, files=files, headers=headers)
+        return response.json()["id"], response.json()["path"]
 
-# Sending the POST request
-response = requests.post(url, json=data, headers=headers)
+def run_inference(img_path: str, lang: str) -> str:
+    try:
+        m_id, m_path = upload_img(img_path)
+    except Exception as e:
+        print("An error occurred while uploading the image:")
+        print(str(e))
+    
+    # Debug print
+    # print(f"File ID: {m_id}, File path: {m_path}")
+    
+    # URL for the API endpoint
+    url = 'https://www.mystic.ai/v3/runs'
 
-# Checking the response
-if response.status_code == 200:
-    print("Request successful")
-    print(response.json())
-else:
-    print("Request failed")
-    print("Status code:", response.status_code)
-    print("Response:", response.text)
+    # Data payload for the POST request
+    data = {
+        "pipeline_id_or_pointer": "uriel/easyocr:v36",
+        "async_run": False,
+        "input_data": [
+            {
+                "type": "file",
+                "value": "",
+                "file_path": m_path
+            },
+            {
+                "type": "string",
+                "value": lang
+            }
+        ]
+    }
 
-# ------------------ #
-# File path for local testing (not working)
-path = "tests/media/test.webp"
-# file_name = path.split("/")[-1]
-# print(file_name)
+    # Sending the POST request
+    response = requests.post(url, json=data, headers=headers)
 
-# # Base64 encoding for the image (not working)
-# def base_img(path: str) -> str:
-#     with open(path, "rb") as imageFile:
-#         img_base64 = base64.b64encode(imageFile.read()).decode()
-#     return img_base64
+    # Checking the response
+    if response.status_code == 200:
+        print("Request successful")
+        print(response.json())
+    else:
+        print("Request failed")
+        print("Status code:", response.status_code)
+        print("Response:", response.text)
 
-# img = base_img(path)
+run_inference("tests/media/test.webp", "ru")
