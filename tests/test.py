@@ -17,7 +17,7 @@ headers = {
     'Content-Type': 'application/json'
 }
 
-def upload_img(path: str) -> str:
+def upload_img(path: str) -> tuple:
     upload_url = "https://www.mystic.ai/v3/pipeline_files"
     img_name = os.path.basename(path)
     mime = mimetypes.guess_type(path)[0]
@@ -37,7 +37,8 @@ def upload_img(path: str) -> str:
         response = requests.post(upload_url, files=files, headers=headers)
         return response.json()["id"], response.json()["path"]
 
-def run_inference(img_path: str, lang: str) -> str:
+# define with lang as optional argument
+def run_inference(img_path: str, lang: str = "en") -> str:
     try:
         m_id, m_path = upload_img(img_path)
     except Exception as e:
@@ -73,10 +74,12 @@ def run_inference(img_path: str, lang: str) -> str:
     # Checking the response
     if response.status_code == 200:
         print("Request successful")
-        print(response.json())
+        # print(response.json())
     else:
         print("Request failed")
         print("Status code:", response.status_code)
         print("Response:", response.text)
+    
+    return response.json()
 
-run_inference("tests/media/test.webp", "ru")
+print(run_inference("tests/media/test.webp", "ru"))
