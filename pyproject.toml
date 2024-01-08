@@ -9,7 +9,7 @@ dependencies = [
     "easyocr>=1.7.1",
     "pipeline-ai>=1.0.26",
     "torch>=2.1.2",
-    "opencv-python-headless>=4.8.1.78",
+    "opencv-python-headless>=4.9.0.80",
     "python-dotenv>=1.0.0",
 ]
 requires-python = "==3.10.*"
@@ -21,4 +21,4 @@ package-type = "application"
 
 [tool.pdm.scripts]
 start.cmd = "src/easyocr.py"
-start.env_file = ".env"
+start.env_file.override = ".env"

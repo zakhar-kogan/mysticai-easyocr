@@ -1,25 +1,38 @@
-from pipeline import File, Pipeline, Variable, entity, pipe, current_configuration
-from pipeline.cloud import compute_requirements, pipelines
-from pipeline.cloud.environments import create_environment
+import os  # For operating system related functionalities
+import dotenv  # For loading environment variables
 
-import easyocr
-import numpy as np
-from PIL import Image
+from PIL import Image  # For working with images
+import io
+from numpy import asarray  # For numerical operations
+import easyocr  # For performing optical character recognition
 
-# Getting environment variables
-import os
+from pipeline import (  # For working with pipelines
+    File,
+    Pipeline,
+    Variable,
+    entity,
+    pipe,
+    current_configuration
+)
+from pipeline.cloud import (  # For working with cloud resources
+    compute_requirements,
+    pipelines
+)
+from pipeline.cloud.environments import create_environment  # For creating cloud environments
+
+dotenv.load_dotenv()
 
 # Initializing environment variables
-# login   = os.environ["USERNAME"]
-# pl      = os.environ["PIPELINE"]
-# env     = os.environ["ENVIRONMENT"]
+login   = os.environ["USERNAME"]
+pl      = os.environ["PIPELINE"]
+env     = os.environ["ENVIRONMENT"]
 
 current_configuration.set_debug_mode(True)
 
-login = 'uriel'
-pl = 'easyocr'
-env = 'easyocr-env'
-
+LANG_MAP = {
+    'Russian': 'ru',
+    'English': 'en',
+}
 
 @entity
 class EasyOCRModel:
@@ -33,36 +46,58 @@ class EasyOCRModel:
         with model_file.path.open("rb") as file:
             self.pipe = dill.load(file)
 
-        self.model_ru_en = easyocr.Reader(['ru', 'en'], recognizer='Transformer')
-        self.model_en = easyocr.Reader(['en'], recognizer='Transformer')
+        self.model_ru_en = easyocr.Reader([LANG_MAP['English'], LANG_MAP['Russian']], recognizer='Transformer')
+        self.model_en = easyocr.Reader([LANG_MAP['English']], recognizer='Transformer')
 
     @pipe
-    def image2ru_en(self, image: File) -> str:
-        out = self.model_ru_en.readtext(np.array(Image.open(image).convert('L')), paragraph=True)
-        return out
+    def predict(self, image: File, lang: str) -> str:
+        """
+        Performs optical character recognition (OCR) on the provided image file.
 
-    @pipe
-    def image2en(self, image: File) -> str:
-        out = self.model_en.readtext(np.array(Image.open(image).convert('L')), paragraph=True)
+        Parameters:
+        image (File): This should be a .png, .jpg, or other image file; or a URL when calling the API.
+        lang (str): The language to use for OCR. Can be either 'ru'/Russian or 'en'/English. Defaults to English.
+
+        Returns:
+        str: The OCR output as a string. If the language is Russian, the function uses a model trained on both English and Russian. If the language is English or any other value, the function uses a model trained only on English.
+
+        Raises:
+        FileNotFoundError: If the image file does not exist.
+        ValueError: If the language is not supported.
+        """
+        # Open the file in binary mode and read it into a BytesIO object
+        img = asarray(Image.open(io.BytesIO(image.path.read_bytes())).convert("L"))
+        out = ''
+        match lang:
+            case 'ru' | 'Russian':
+                out = self.model_ru_en.readtext(img, paragraph=True)
+            case 'en' | 'English':
+                out = self.model_en.readtext(img, paragraph=True)
+            case _:
+                out = self.model_en.readtext(img, paragraph=True)
         return out
 
 
 with Pipeline() as builder:
     image = Variable(
         File,
-        choices=['ru_en', 'en'],
         title="Image File",
-        description="Upload a .png, .jpg or other image file to be captioned. You can also provide URL",
+        description="Upload a .png, .jpg or other image file to be captioned, or a URL with API",
+    )
+    
+    lang_choice = Variable(
+        str,
+        choices=list(LANG_MAP.keys()),
+        title="Language",
+        default="Russian",
+        description="OCR language to use. English if not specified.",
     )
 
     model = EasyOCRModel()
     my_file = File.from_object(model)  # Create a file object
     model.load(my_file)
 
-    if choices == 'ru_en':
-        output = model.image2ru_en(image)
-    elif choices == 'en':
-        output = model.image2en(image)
+    output = model.predict(image, lang_choice)
 
     builder.output(output)
 
@@ -80,25 +115,25 @@ my_pl = builder.get_pipeline()
 my_pl_name = f"{login}/{pl}"
 my_env_name = f"{login}/{env}"
 
-# try:
-#     env_id = create_environment(
-#         name=my_env_name,
-#         python_requirements=[
-#             "easyocr==1.7.1",
-#             "opencv-python-headless==4.8.1.78",
-#             "torch==2.1.2",
-#             "torchvision==0.16.2",
-#         ],
-#     )
-# except Exception:
-#     pass
+try:
+    env_id = create_environment(
+        name=my_env_name,
+        python_requirements=[
+            "easyocr==1.7.1",
+            "opencv-python-headless==4.9.0.80",
+            "torch==2.1.2",
+            "torchvision==0.16.2",
+        ],
+    )
+except Exception:
+    pass
 
-# pipelines.upload_pipeline(
-#     my_pl,
-#     my_pl_name,
-#     environment_id_or_name=my_env_name,
-#     required_gpu_vram_mb=5_000,
-#     accelerators=[
-#         compute_requirements.Accelerator.nvidia_t4,
-#     ],
-# )
+pipelines.upload_pipeline(
+    my_pl,
+    my_pl_name,
+    environment_id_or_name=my_env_name,
+    required_gpu_vram_mb=5_000,
+    accelerators=[
+        compute_requirements.Accelerator.nvidia_t4,
+    ],
+)
