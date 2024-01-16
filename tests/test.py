@@ -18,7 +18,9 @@ headers = {
 def upload_img(path: str) -> tuple:
     upload_url = "https://www.mystic.ai/v3/pipeline_files"
     img_name = os.path.basename(path)
-    mime = mimetypes.guess_type(path)
+    mime = mimetypes.guess_type(path)[0]
+    if img_name[-4:] == "webp":
+        mime = "image/webp"
 
     if not os.path.exists(path):
         raise FileNotFoundError(f"No file found at {path}")
