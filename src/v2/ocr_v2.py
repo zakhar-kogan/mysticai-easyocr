@@ -19,7 +19,6 @@ current_configuration.set_debug_mode(True)
 LANG_MAP = {
     'Russian': 'ru',
     'English': 'en',
-    'Spanish': 
 }
 
 @entity
