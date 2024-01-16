@@ -22,7 +22,7 @@ RUN pip install pipeline-ai easyocr torch torchvision opencv-python-headless
 COPY ./ ./
 
 ENV PIPELINE_PATH=ocr_v2:my_pl
-ENV PIPELINE_NAME=uriel/easyocr-2
-ENV PIPELINE_IMAGE=uriel/easyocr-2
+ENV PIPELINE_NAME=uriel/easyocr-r
+ENV PIPELINE_IMAGE=uriel/easyocr-r
 
 CMD ["uvicorn", "pipeline.container.startup:create_app", "--host", "0.0.0.0", "--port", "14300"]

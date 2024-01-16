@@ -24,6 +24,7 @@ LANG_MAP = {
     'Uzbek': 'uz',
     'French': 'fr',
     'Farsi': 'fa',
+    'German': 'de',
     'Indonesian': 'id',
 }
 
@@ -42,6 +43,7 @@ class EasyOCRModel:
         self.model_uz_en = easyocr.Reader([LANG_MAP['English'], LANG_MAP['Uzbek']], recognizer='Transformer')
         self.model_fr_en = easyocr.Reader([LANG_MAP['English'], LANG_MAP['French']], recognizer='Transformer')
         self.model_fa_en = easyocr.Reader([LANG_MAP['English'], LANG_MAP['Farsi']], recognizer='Transformer')
+        self.model_de_en = easyocr.Reader([LANG_MAP['English'], LANG_MAP['German']], recognizer='Transformer')
         self.model_id_en = easyocr.Reader([LANG_MAP['English'], LANG_MAP['Indonesian']], recognizer='Transformer')
         self.model_en = easyocr.Reader([LANG_MAP['English']], recognizer='Transformer')
 
@@ -52,6 +54,7 @@ class EasyOCRModel:
             'uz': self.model_uz_en,
             'fr': self.model_fr_en,
             'fa': self.model_fa_en,
+            'de': self.model_de_en,
             'id': self.model_id_en,
             'en': self.model_en,
         }
@@ -83,7 +86,7 @@ class EasyOCRModel:
                 out = self.model_en.readtext(img, paragraph=True)
             case 'es' | 'Spanish':
                 out = self.model_es_en.readtext(img, paragraph=True)
-            case 'pt' | 'pt_br' | 'Portuguese':
+            case 'pt' | 'pt_br' | 'Portuguese / Brazilian':
                 out = self.model_pt_en.readtext(img, paragraph=True)
             case 'uz' | 'Uzbek':
                 out = self.model_uz_en.readtext(img, paragraph=True)
@@ -91,6 +94,8 @@ class EasyOCRModel:
                 out = self.model_fr_en.readtext(img, paragraph=True)
             case 'fa' | 'Farsi':
                 out = self.model_fa_en.readtext(img, paragraph=True)
+            case 'de' | 'German':
+                out = self.model_de_en.readtext(img, paragraph=True)
             case 'id' | 'Indonesian':
                 out = self.model_id_en.readtext(img, paragraph=True)
             case _:
