@@ -23,18 +23,17 @@ POST request snippet is @ `upload_img` function in `/tests/test.py`.
   **`upload_img` function takes file path as an argument!**
 
 - **lang (str)** *[Optional]*: The language to use for OCR. Can be one of the following:
-``` 'Russian': 'ru',
-    'English': 'en',
-    'Spanish': 'es',
-    'Portuguese': 'pt',
-    'Uzbek': 'uz',
-    'French': 'fr',
-    'Farsi': 'fa',
-    'German': 'de',
-    'Indonesian': 'id'```
-
-Code block:
-
+```
+  'Russian': 'ru',
+  'English': 'en',
+  'Spanish': 'es',
+  'Portuguese': 'pt' | 'br',
+  'Uzbek': 'uz',
+  'French': 'fr',
+  'Farsi': 'fa',
+  'German': 'de',
+  'Indonesian': 'id'
+```
 
 Defaults to English.
 

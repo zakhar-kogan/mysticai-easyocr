@@ -1,11 +1,9 @@
 # Imports
 import requests
 import os
-from dotenv import load_dotenv
 import mimetypes
 
 # Getting the API key
-load_dotenv()
 if os.getenv("API_KEY"):
     api_key = os.getenv("API_KEY")
 else:
@@ -44,16 +42,16 @@ def run_inference(img_path: str, lang: str = "en") -> str:
     except Exception as e:
         print("An error occurred while uploading the image:")
         print(str(e))
-    
+
     # Debug print
     # print(f"File ID: {m_id}, File path: {m_path}")
-    
+
     # URL for the API endpoint
     url = 'https://www.mystic.ai/v3/runs'
 
     # Data payload for the POST request
     data = {
-        "pipeline_id_or_pointer": "uriel/easyocr:v36",
+        "pipeline_id_or_pointer": "uriel/easyocr-r:v31",
         "async_run": False,
         "input_data": [
             {
@@ -79,7 +77,7 @@ def run_inference(img_path: str, lang: str = "en") -> str:
         print("Request failed")
         print("Status code:", response.status_code)
         print("Response:", response.text)
-    
+
     return response.json()
 
 print(run_inference("tests/media/test.webp", "ru"))

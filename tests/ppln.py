@@ -12,7 +12,7 @@ LANG_MAP = {
 }
 
 output = run_pipeline(
-        "uriel/easyocr:v36",
+        "uriel/easyocr-r:v31",
         File(
             # URL
             # url="https://api.telegram.org/file/bot6678109627:AAFmbzFijiTcICi_dWSiFjeVuIiWbG9cjP8/photos/file_15.jpg"
