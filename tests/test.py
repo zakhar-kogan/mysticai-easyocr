@@ -80,4 +80,4 @@ def run_inference(img_path: str, lang: str = "en") -> str:
 
     return response.json()
 
-print(run_inference("tests/media/test.webp", "ru"))
+print(run_inference("/home/ubuntu/mysticai-easyocr/tests/media/ex.jpeg", "ru"))
