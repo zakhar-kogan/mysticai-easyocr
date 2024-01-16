@@ -37,6 +37,12 @@ class EasyOCRModel:
         # this needs to run only once to load the model into memory
 
         self.model_ru_en = easyocr.Reader([LANG_MAP['English'], LANG_MAP['Russian']], recognizer='Transformer')
+        self.model_es_en = easyocr.Reader([LANG_MAP['English'], LANG_MAP['Spanish']], recognizer='Transformer')
+        self.model_pt_en = easyocr.Reader([LANG_MAP['English'], LANG_MAP['Portuguese']], recognizer='Transformer')
+        self.model_uz_en = easyocr.Reader([LANG_MAP['English'], LANG_MAP['Uzbek']], recognizer='Transformer')
+        self.model_fr_en = easyocr.Reader([LANG_MAP['English'], LANG_MAP['French']], recognizer='Transformer')
+        self.model_fa_en = easyocr.Reader([LANG_MAP['English'], LANG_MAP['Farsi']], recognizer='Transformer')
+        self.model_id_en = easyocr.Reader([LANG_MAP['English'], LANG_MAP['Indonesian']], recognizer='Transformer')
         self.model_en = easyocr.Reader([LANG_MAP['English']], recognizer='Transformer')
 
     @pipe
