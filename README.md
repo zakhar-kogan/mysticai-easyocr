@@ -17,12 +17,26 @@ POST request snippet is @ `upload_img` function in `/tests/test.py`.
 
 #### Parameters
 - **image (File)**: This should be a .png, .jpg, or other image file; or a URL when calling by API.
-  
+
   Important: the file should be uploaded to the storage first, see [here](https://docs.mystic.ai/reference/file_post_v3_pipeline_files_post) for details, or `upload_img` function in `/tests/test.py` for a snippet.
-  
+
   **`upload_img` function takes file path as an argument!**
 
-- **lang (str)** *[Optional]*: The language to use for OCR. Can be either `'ru'`/`'Russian'` or `'en'`/`'English'`. Defaults to English.
+- **lang (str)** *[Optional]*: The language to use for OCR. Can be one of the following:
+``` 'Russian': 'ru',
+    'English': 'en',
+    'Spanish': 'es',
+    'Portuguese': 'pt',
+    'Uzbek': 'uz',
+    'French': 'fr',
+    'Farsi': 'fa',
+    'German': 'de',
+    'Indonesian': 'id'```
+
+Code block:
+
+
+Defaults to English.
 
 #### Returns
 - **str**: The OCR output as a JSON with bounding box coordinates, e.g. `[[[[[0, 0], [572, 0], [572, 54], [0, 54]], 'когда забыл 0 том,что закрыл квартиру ,вернулся,а она закрыта:']]]`
