@@ -45,6 +45,17 @@ class EasyOCRModel:
         self.model_id_en = easyocr.Reader([LANG_MAP['English'], LANG_MAP['Indonesian']], recognizer='Transformer')
         self.model_en = easyocr.Reader([LANG_MAP['English']], recognizer='Transformer')
 
+        self.model_map = {
+            'ru': self.model_ru_en,
+            'es': self.model_es_en,
+            'pt': self.model_pt_en,
+            'uz': self.model_uz_en,
+            'fr': self.model_fr_en,
+            'fa': self.model_fa_en,
+            'id': self.model_id_en,
+            'en': self.model_en,
+        }
+
     @pipe
     def predict(self, image: File, lang: str) -> str:
         """
@@ -64,11 +75,24 @@ class EasyOCRModel:
         # Open the file in binary mode and read it into a BytesIO object
         img = asarray(Image.open(io.BytesIO(image.path.read_bytes())).convert("L"))
         out = ''
+
         match lang:
             case 'ru' | 'Russian':
                 out = self.model_ru_en.readtext(img, paragraph=True)
             case 'en' | 'English':
                 out = self.model_en.readtext(img, paragraph=True)
+            case 'es' | 'Spanish':
+                out = self.model_es_en.readtext(img, paragraph=True)
+            case 'pt' | 'Portuguese':
+                out = self.model_pt_en.readtext(img, paragraph=True)
+            case 'uz' | 'Uzbek':
+                out = self.model_uz_en.readtext(img, paragraph=True)
+            case 'fr' | 'French':
+                out = self.model_fr_en.readtext(img, paragraph=True)
+            case 'fa' | 'Farsi':
+                out = self.model_fa_en.readtext(img, paragraph=True)
+            case 'id' | 'Indonesian':
+                out = self.model_id_en.readtext(img, paragraph=True)
             case _:
                 out = self.model_en.readtext(img, paragraph=True)
         return out
