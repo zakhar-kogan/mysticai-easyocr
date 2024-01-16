@@ -20,5 +20,5 @@ license = {text = "MIT"}
 package-type = "application"
 
 [tool.pdm.scripts]
-start.cmd = "src/easyocr.py"
+start.cmd = "src/v2/ocr_v2.py"
 start.env_file.override = ".env"

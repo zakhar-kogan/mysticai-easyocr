@@ -85,14 +85,21 @@ files = [
 ]
 
 [[package]]
-name = "dill"
-version = "0.3.7"
+name = "docker"
+version = "6.1.3"
 requires_python = ">=3.7"
-summary = "serialize all of Python"
+summary = "A Python library for the Docker Engine API."
 groups = ["default"]
+dependencies = [
+    "packaging>=14.0",
+    "pywin32>=304; sys_platform == \"win32\"",
+    "requests>=2.26.0",
+    "urllib3>=1.26.0",
+    "websocket-client>=0.32.0",
+]
 files = [
-    {file = "dill-0.3.7-py3-none-any.whl", hash = "sha256:76b122c08ef4ce2eedcd4d1abd8e641114bfc6c2867f49f3c41facf65bf19f5e"},
-    {file = "dill-0.3.7.tar.gz", hash = "sha256:cc1c8b182eb3013e24bd475ff2e9295af86c1a38eb1aff128dac8962a9ce3c03"},
+    {file = "docker-6.1.3-py3-none-any.whl", hash = "sha256:aecd2277b8bf8e506e484f6ab7aec39abe0038e29fa4a6d3ba86c3fe01844ed9"},
+    {file = "docker-6.1.3.tar.gz", hash = "sha256:aa6d17830045ba5ef0168d5eaa34d37beeb113948c413affe1d5991fc11f9a20"},
 ]
 
 [[package]]
@@ -165,36 +172,35 @@ files = [
 
 [[package]]
 name = "httpcore"
-version = "0.16.3"
-requires_python = ">=3.7"
+version = "1.0.2"
+requires_python = ">=3.8"
 summary = "A minimal low-level HTTP client."
 groups = ["default"]
 dependencies = [
-    "anyio<5.0,>=3.0",
     "certifi",
     "h11<0.15,>=0.13",
-    "sniffio==1.*",
 ]
 files = [
-    {file = "httpcore-0.16.3-py3-none-any.whl", hash = "sha256:da1fb708784a938aa084bde4feb8317056c55037247c787bd7e19eb2c2949dc0"},
-    {file = "httpcore-0.16.3.tar.gz", hash = "sha256:c5d6f04e2fc530f39e0c077e6a30caa53f1451096120f1f38b954afd0b17c0cb"},
+    {file = "httpcore-1.0.2-py3-none-any.whl", hash = "sha256:096cc05bca73b8e459a1fc3dcf585148f63e534eae4339559c9b8a8d6399acc7"},
+    {file = "httpcore-1.0.2.tar.gz", hash = "sha256:9fc092e4799b26174648e54b74ed5f683132a464e95643b226e00c2ed2fa6535"},
 ]
 
 [[package]]
 name = "httpx"
-version = "0.23.3"
-requires_python = ">=3.7"
+version = "0.26.0"
+requires_python = ">=3.8"
 summary = "The next generation HTTP client."
 groups = ["default"]
 dependencies = [
+    "anyio",
     "certifi",
-    "httpcore<0.17.0,>=0.15.0",
-    "rfc3986[idna2008]<2,>=1.3",
+    "httpcore==1.*",
+    "idna",
     "sniffio",
 ]
 files = [
-    {file = "httpx-0.23.3-py3-none-any.whl", hash = "sha256:a211fcce9b1254ea24f0cd6af9869b3d29aba40154e947d2a07bb499b3e310d6"},
-    {file = "httpx-0.23.3.tar.gz", hash = "sha256:9818458eb565bb54898ccb9b8b251a28785dd4a55afbc23d0eb410754fe7d0f9"},
+    {file = "httpx-0.26.0-py3-none-any.whl", hash = "sha256:8915f5a3627c4d47b73e8202457cb28f1266982d1159bd5779d86a80c0eab1cd"},
+    {file = "httpx-0.26.0.tar.gz", hash = "sha256:451b55c30d5185ea6b23c2c793abf9bb237d2a7dfb901ced6ff69ad37ec1dfaf"},
 ]
 
 [[package]]
@@ -549,45 +555,27 @@ files = [
 ]
 
 [[package]]
-name = "pip-requirements-parser"
-version = "32.0.1"
-requires_python = ">=3.6.0"
-summary = "pip requirements parser - a mostly correct pip requirements parsing library because it uses pip's own code."
-groups = ["default"]
-dependencies = [
-    "packaging",
-    "pyparsing",
-]
-files = [
-    {file = "pip-requirements-parser-32.0.1.tar.gz", hash = "sha256:b4fa3a7a0be38243123cf9d1f3518da10c51bdb165a2b2985566247f9155a7d3"},
-    {file = "pip_requirements_parser-32.0.1-py3-none-any.whl", hash = "sha256:4659bc2a667783e7a15d190f6fccf8b2486685b6dba4c19c3876314769c57526"},
-]
-
-[[package]]
 name = "pipeline-ai"
-version = "1.0.26"
+version = "2.0.5"
 requires_python = ">=3.10,<4.0"
 summary = "Pipelines for machine learning workloads."
 groups = ["default"]
 dependencies = [
     "PyYAML<7.0,>=6.0",
     "cloudpickle<3.0.0,>=2.2.0",
-    "dill<0.4.0,>=0.3.6",
-    "httpx<0.24.0,>=0.23.1",
-    "packaging>=21.0",
-    "pip-requirements-parser<33.0.0,>=32.0.1",
+    "docker<7.0.0,>=6.1.3",
+    "httpx<0.27.0,>=0.26.0",
     "pydantic<2.0.0,>=1.8.2",
-    "pyhumps<4.0.0,>=3.0.2",
+    "pyhumps<4.0.0,>=3.8.0",
     "requests-toolbelt<2.0.0,>=1.0.0",
     "requests<3.0.0,>=2.30.0",
-    "setuptools<66.0.0,>=65.4.1",
     "tabulate<0.10.0,>=0.9.0",
-    "tqdm<5.0.0,>=4.62.3",
+    "tqdm<5.0.0,>=4.66.1",
     "websockets>=10.4",
 ]
 files = [
-    {file = "pipeline_ai-1.0.26-py3-none-any.whl", hash = "sha256:69b03a0d5a2e362b076158b4d287ce1abcc34b54cb7a3d5048852b9455f44982"},
-    {file = "pipeline_ai-1.0.26.tar.gz", hash = "sha256:ab0041997ef58e2a053dd491b19c9e7a84f784453f9d49a10d8d31aef51f53a0"},
+    {file = "pipeline_ai-2.0.5-py3-none-any.whl", hash = "sha256:a64707220c8a49d982a445c3e3a91f0c6e205e12d11bdb0e44ee71e9780b6628"},
+    {file = "pipeline_ai-2.0.5.tar.gz", hash = "sha256:c010987a46b6a7902eae6e2578e19028f1d4fef18c69e948ad3e210d8c6614b0"},
 ]
 
 [[package]]
@@ -640,17 +628,6 @@ files = [
 ]
 
 [[package]]
-name = "pyparsing"
-version = "3.1.1"
-requires_python = ">=3.6.8"
-summary = "pyparsing module - Classes and methods to define and execute parsing grammars"
-groups = ["default"]
-files = [
-    {file = "pyparsing-3.1.1-py3-none-any.whl", hash = "sha256:32c7c0b711493c72ff18a981d24f28aaf9c1fb7ed5e9667c9e84e3db623bdbfb"},
-    {file = "pyparsing-3.1.1.tar.gz", hash = "sha256:ede28a1a32462f5a9705e07aea48001a08f7cf81a021585011deba701581a0db"},
-]
-
-[[package]]
 name = "python-bidi"
 version = "0.4.2"
 summary = "Pure python implementation of the BiDi layout algorithm"
@@ -672,6 +649,17 @@ groups = ["default"]
 files = [
     {file = "python-dotenv-1.0.0.tar.gz", hash = "sha256:a8df96034aae6d2d50a4ebe8216326c61c3eb64836776504fcca410e5937a3ba"},
     {file = "python_dotenv-1.0.0-py3-none-any.whl", hash = "sha256:f5971a9226b701070a4bf2c38c89e5a3f0d64de8debda981d1db98583009122a"},
+]
+
+[[package]]
+name = "pywin32"
+version = "306"
+summary = "Python for Window Extensions"
+groups = ["default"]
+marker = "sys_platform == \"win32\""
+files = [
+    {file = "pywin32-306-cp310-cp310-win32.whl", hash = "sha256:06d3420a5155ba65f0b72f2699b5bacf3109f36acbe8923765c22938a69dfc8d"},
+    {file = "pywin32-306-cp310-cp310-win_amd64.whl", hash = "sha256:84f4471dbca1887ea3803d8848a1616429ac94a4a8d05f4bc9c5dcfd42ca99c8"},
 ]
 
 [[package]]
@@ -724,31 +712,6 @@ files = [
 ]
 
 [[package]]
-name = "rfc3986"
-version = "1.5.0"
-summary = "Validating URI References per RFC 3986"
-groups = ["default"]
-files = [
-    {file = "rfc3986-1.5.0-py2.py3-none-any.whl", hash = "sha256:a86d6e1f5b1dc238b218b012df0aa79409667bb209e58da56d0b94704e712a97"},
-    {file = "rfc3986-1.5.0.tar.gz", hash = "sha256:270aaf10d87d0d4e095063c65bf3ddbc6ee3d0b226328ce21e036f946e421835"},
-]
-
-[[package]]
-name = "rfc3986"
-version = "1.5.0"
-extras = ["idna2008"]
-summary = "Validating URI References per RFC 3986"
-groups = ["default"]
-dependencies = [
-    "idna",
-    "rfc3986==1.5.0",
-]
-files = [
-    {file = "rfc3986-1.5.0-py2.py3-none-any.whl", hash = "sha256:a86d6e1f5b1dc238b218b012df0aa79409667bb209e58da56d0b94704e712a97"},
-    {file = "rfc3986-1.5.0.tar.gz", hash = "sha256:270aaf10d87d0d4e095063c65bf3ddbc6ee3d0b226328ce21e036f946e421835"},
-]
-
-[[package]]
 name = "scikit-image"
 version = "0.22.0"
 requires_python = ">=3.9"
@@ -790,17 +753,6 @@ files = [
     {file = "scipy-1.11.4-cp310-cp310-musllinux_1_1_x86_64.whl", hash = "sha256:8fce70f39076a5aa62e92e69a7f62349f9574d8405c0a5de6ed3ef72de07f446"},
     {file = "scipy-1.11.4-cp310-cp310-win_amd64.whl", hash = "sha256:6550466fbeec7453d7465e74d4f4b19f905642c89a7525571ee91dd7adabb5a3"},
     {file = "scipy-1.11.4.tar.gz", hash = "sha256:90a2b78e7f5733b9de748f589f09225013685f9b218275257f8a8168ededaeaa"},
-]
-
-[[package]]
-name = "setuptools"
-version = "65.7.0"
-requires_python = ">=3.7"
-summary = "Easily download, build, install, upgrade, and uninstall Python packages"
-groups = ["default"]
-files = [
-    {file = "setuptools-65.7.0-py3-none-any.whl", hash = "sha256:8ab4f1dbf2b4a65f7eec5ad0c620e84c34111a68d3349833494b9088212214dd"},
-    {file = "setuptools-65.7.0.tar.gz", hash = "sha256:4d3c92fac8f1118bb77a22181355e29c239cabfe2b9effdaa665c66b711136d7"},
 ]
 
 [[package]]
@@ -988,6 +940,17 @@ groups = ["default"]
 files = [
     {file = "urllib3-2.1.0-py3-none-any.whl", hash = "sha256:55901e917a5896a349ff771be919f8bd99aff50b79fe58fec595eb37bbc56bb3"},
     {file = "urllib3-2.1.0.tar.gz", hash = "sha256:df7aa8afb0148fa78488e7899b2c59b5f4ffcfa82e6c54ccb9dd37c1d7b52d54"},
+]
+
+[[package]]
+name = "websocket-client"
+version = "1.7.0"
+requires_python = ">=3.8"
+summary = "WebSocket client for Python with low level API options"
+groups = ["default"]
+files = [
+    {file = "websocket-client-1.7.0.tar.gz", hash = "sha256:10e511ea3a8c744631d3bd77e61eb17ed09304c413ad42cf6ddfa4c7787e8fe6"},
+    {file = "websocket_client-1.7.0-py3-none-any.whl", hash = "sha256:f4c3d22fec12a2461427a29957ff07d35098ee2d976d3ba244e688b8b4057588"},
 ]
 
 [[package]]

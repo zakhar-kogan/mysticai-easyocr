@@ -1,0 +1,20 @@
+runtime:
+  container_commands:
+  - apt-get update
+  - apt-get install -y git
+  python:
+    version: '3.10'
+    requirements:
+    - pipeline-ai
+    - easyocr
+    - torch
+    - torchvision
+    - opencv-python-headless
+    cuda_version: '11.4'
+accelerators: ["nvidia_t4"]
+accelerator_memory: 5000
+pipeline_graph: ocr_v2:my_pl
+pipeline_name: uriel/easyocr-2
+description: null
+readme: null
+extras: {}
