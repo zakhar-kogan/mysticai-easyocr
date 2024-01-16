@@ -14,7 +14,7 @@ runtime:
 accelerators: ["nvidia_t4"]
 accelerator_memory: 5000
 pipeline_graph: ocr_v2:my_pl
-pipeline_name: uriel/easyocr-2
+pipeline_name: uriel/easyocr-r
 description: null
 readme: null
 extras: {}
