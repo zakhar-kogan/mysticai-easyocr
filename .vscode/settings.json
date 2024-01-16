@@ -1,4 +1,5 @@
 {
     "python.analysis.typeCheckingMode": "basic",
-    "gitdoc.enabled": true
+    "gitdoc.enabled": true,
+    "editor.wordWrap": "on"
 }
