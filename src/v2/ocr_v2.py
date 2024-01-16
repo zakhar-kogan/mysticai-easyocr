@@ -48,7 +48,7 @@ class EasyOCRModel:
         self.model_map = {
             'ru': self.model_ru_en,
             'es': self.model_es_en,
-            'pt': self.model_pt_en,
+            'pt_br': self.model_pt_en,
             'uz': self.model_uz_en,
             'fr': self.model_fr_en,
             'fa': self.model_fa_en,
@@ -83,7 +83,7 @@ class EasyOCRModel:
                 out = self.model_en.readtext(img, paragraph=True)
             case 'es' | 'Spanish':
                 out = self.model_es_en.readtext(img, paragraph=True)
-            case 'pt' | 'Portuguese':
+            case 'pt' | 'pt_br' | 'Portuguese':
                 out = self.model_pt_en.readtext(img, paragraph=True)
             case 'uz' | 'Uzbek':
                 out = self.model_uz_en.readtext(img, paragraph=True)
