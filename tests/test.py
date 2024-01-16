@@ -18,7 +18,7 @@ headers = {
 def upload_img(path: str) -> tuple:
     upload_url = "https://www.mystic.ai/v3/pipeline_files"
     img_name = os.path.basename(path)
-    mime = mimetypes.guess_type(path)[0]
+    mime = mimetypes.guess_type(path)
 
     if not os.path.exists(path):
         raise FileNotFoundError(f"No file found at {path}")
@@ -80,4 +80,4 @@ def run_inference(img_path: str, lang: str = "en") -> str:
 
     return response.json()
 
-print(run_inference("/home/ubuntu/mysticai-easyocr/tests/media/ex.jpeg", "ru"))
+print(run_inference("/home/ubuntu/mysticai-easyocr/tests/media/sun.webp", "en"))
