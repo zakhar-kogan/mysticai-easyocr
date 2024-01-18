@@ -3,6 +3,9 @@ import requests
 import os
 import mimetypes
 
+# Absolute path
+absolute_path = os.path.dirname(__file__)
+
 # Getting the API key
 if os.getenv("API_KEY"):
     api_key = os.getenv("API_KEY")
@@ -11,12 +14,13 @@ else:
 
 # Headers
 headers = {
-    'Authorization': f"Bearer {api_key}",
-    'Content-Type': 'application/json'
+    "accept": "application/json",
+    "content-type": "application/json",
+    "authorization": f"Bearer {api_key}"
 }
 
 def upload_img(path: str) -> tuple:
-    upload_url = "https://www.mystic.ai/v3/pipeline_files"
+    upload_url = "https://www.mystic.ai/v4/files"
     img_name = os.path.basename(path)
     mime = mimetypes.guess_type(path)[0]
     if img_name[-4:] == "webp":
@@ -38,27 +42,26 @@ def upload_img(path: str) -> tuple:
         return response.json()["id"], response.json()["path"]
 
 # define with lang as optional argument
-def run_inference(img_path: str, lang: str = "en") -> str:
+def run_inference(img_path: str, lang: str) -> str:
     try:
         m_id, m_path = upload_img(img_path)
     except Exception as e:
         print("An error occurred while uploading the image:")
         print(str(e))
-
+    
     # Debug print
     # print(f"File ID: {m_id}, File path: {m_path}")
 
     # URL for the API endpoint
-    url = 'https://www.mystic.ai/v3/runs'
+    url = 'https://www.mystic.ai/v4/runs'
 
     # Data payload for the POST request
     data = {
-        "pipeline_id_or_pointer": "uriel/easyocr-r:v31",
+        "pipeline_id_or_pointer": "uriel/easyocr:v36",
         "async_run": False,
         "input_data": [
             {
                 "type": "file",
-                "value": "",
                 "file_path": m_path
             },
             {
@@ -69,6 +72,7 @@ def run_inference(img_path: str, lang: str = "en") -> str:
     }
 
     # Sending the POST request
+    print("Running inference...")
     response = requests.post(url, json=data, headers=headers)
 
     # Checking the response
@@ -82,4 +86,4 @@ def run_inference(img_path: str, lang: str = "en") -> str:
 
     return response.json()
 
-print(run_inference("/home/ubuntu/mysticai-easyocr/tests/media/sun.webp", "en"))
+print(run_inference("tests/media/test.webp", "ru"))
