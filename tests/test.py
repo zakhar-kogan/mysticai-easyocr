@@ -55,11 +55,11 @@ def run_inference(img_path: str, lang: str) -> str:
     # URL for the API endpoint
     url = 'https://www.mystic.ai/v4/runs'
 
+    m_path = "https://storage.mystic.ai/" + m_path
     # Data payload for the POST request
     data = {
-        "pipeline_id_or_pointer": "uriel/easyocr:v36",
-        "async_run": False,
-        "input_data": [
+        "pipeline": "uriel/easyocr-r:v31",
+        "inputs": [
             {
                 "type": "file",
                 "file_path": m_path
@@ -73,12 +73,13 @@ def run_inference(img_path: str, lang: str) -> str:
 
     # Sending the POST request
     print("Running inference...")
-    response = requests.post(url, json=data, headers=headers)
+    print(data)
 
+    response = requests.post(url, json=data, headers=headers)
     # Checking the response
+    
     if response.status_code == 200:
         print("Request successful")
-        # print(response.json())
     else:
         print("Request failed")
         print("Status code:", response.status_code)
@@ -86,4 +87,5 @@ def run_inference(img_path: str, lang: str) -> str:
 
     return response.json()
 
-print(run_inference("tests/media/test.webp", "ru"))
+path = absolute_path + "/media/test.webp"
+print(run_inference(path, "ru"))
