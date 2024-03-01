@@ -5,7 +5,7 @@
 groups = ["default"]
 strategy = ["cross_platform", "inherit_metadata"]
 lock_version = "4.4.1"
-content_hash = "sha256:0d9fa756376a209dec862d0373b54b0525c8b171cbd2c02c5ceeea603d5effff"
+content_hash = "sha256:d3ecf908ea773470e8d5e93dbc359baeb5ec333fbd454ea5760ae13342ba843a"
 
 [[package]]
 name = "anyio"
@@ -556,7 +556,7 @@ files = [
 
 [[package]]
 name = "pipeline-ai"
-version = "2.0.5"
+version = "2.0.18"
 requires_python = ">=3.10,<4.0"
 summary = "Pipelines for machine learning workloads."
 groups = ["default"]
@@ -574,8 +574,8 @@ dependencies = [
     "websockets>=10.4",
 ]
 files = [
-    {file = "pipeline_ai-2.0.5-py3-none-any.whl", hash = "sha256:a64707220c8a49d982a445c3e3a91f0c6e205e12d11bdb0e44ee71e9780b6628"},
-    {file = "pipeline_ai-2.0.5.tar.gz", hash = "sha256:c010987a46b6a7902eae6e2578e19028f1d4fef18c69e948ad3e210d8c6614b0"},
+    {file = "pipeline_ai-2.0.18-py3-none-any.whl", hash = "sha256:1ab624527dcd35e23b512ddb098b284297a86ede974b09ee265ea7c97d125856"},
+    {file = "pipeline_ai-2.0.18.tar.gz", hash = "sha256:8fd007728763d69e70e1820512da78e57a9c568a0b97466f4c80602d5e15b7ba"},
 ]
 
 [[package]]

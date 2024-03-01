@@ -48,7 +48,7 @@ def run_inference(img_path: str, lang: str) -> str:
     except Exception as e:
         print("An error occurred while uploading the image:")
         print(str(e))
-    
+
     # Debug print
     # print(f"File ID: {m_id}, File path: {m_path}")
 
@@ -58,7 +58,7 @@ def run_inference(img_path: str, lang: str) -> str:
     m_path = "https://storage.mystic.ai/" + m_path
     # Data payload for the POST request
     data = {
-        "pipeline": "uriel/easyocr-r:v31",
+        "pipeline": "uriel/easyocr-r:v33",
         "inputs": [
             {
                 "type": "file",
@@ -77,7 +77,7 @@ def run_inference(img_path: str, lang: str) -> str:
 
     response = requests.post(url, json=data, headers=headers)
     # Checking the response
-    
+
     if response.status_code == 200:
         print("Request successful")
     else:
@@ -88,4 +88,4 @@ def run_inference(img_path: str, lang: str) -> str:
     return response.json()
 
 path = absolute_path + "/media/test.webp"
-print(run_inference(path, "ru"))
+print(run_inference(path, "en"))

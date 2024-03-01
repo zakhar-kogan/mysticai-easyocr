@@ -16,9 +16,9 @@ requires-python = "==3.10.*"
 readme = "README.md"
 license = {text = "MIT"}
 
-[tool.pdm]
-package-type = "application"
 
+[tool.pdm]
+distribution = false
 [tool.pdm.scripts]
 start.cmd = "src/v2/ocr_v2.py"
 start.env_file.override = ".env"

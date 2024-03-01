@@ -9,7 +9,6 @@ runtime:
     - easyocr
     - torch
     - torchvision
-    - opencv-python-headless
     cuda_version: '11.4'
 accelerators: ["nvidia_a100_5gb"]
 accelerator_memory: 5000
