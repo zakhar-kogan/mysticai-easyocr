@@ -55,7 +55,8 @@ def run_inference(img_path: str, lang: str) -> str:
     # URL for the API endpoint
     url = 'https://www.mystic.ai/v4/runs'
 
-    m_path = "https://storage.mystic.ai/" + m_path
+    # m_path = "https://storage.mystic.ai/" + m_path
+    m_path = "https://storage.mystic.ai/pipeline_files/4c/4d/275dec7b-5f03-4356-91d0-7c5cafb8c4e0.jpg"
     # Data payload for the POST request
     data = {
         "pipeline": "uriel/easyocr-r:v33",
