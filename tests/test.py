@@ -59,7 +59,7 @@ def run_inference(img_path: str, lang: str) -> str:
     m_path = "https://storage.mystic.ai/pipeline_files/4c/4d/275dec7b-5f03-4356-91d0-7c5cafb8c4e0.jpg"
     # Data payload for the POST request
     data = {
-        "pipeline": "uriel/easyocr-r:v33",
+        "pipeline": "uriel/easyocr-r:v34",
         "inputs": [
             {
                 "type": "file",
