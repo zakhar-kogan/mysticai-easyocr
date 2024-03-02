@@ -9,7 +9,6 @@ runtime:
     - easyocr
     - torch
     - torchvision
-    cuda_version: '11.4'
 accelerators: ["nvidia_a100_5gb"]
 pipeline_graph: ocr_v2:my_pl
 pipeline_name: uriel/easyocr-r
