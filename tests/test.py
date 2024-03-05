@@ -69,7 +69,8 @@ def run_inference(img_path: str, lang: str) -> str:
                 "type": "string",
                 "value": lang
             }
-        ]
+        ],
+        "async_run": true
     }
 
     # Sending the POST request
