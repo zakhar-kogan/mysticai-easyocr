@@ -9,7 +9,7 @@ runtime:
     - easyocr
     - torch
     - torchvision
-accelerators: ["nvidia_a100_5gb"]
+accelerators: ["nvidia_t4"]
 pipeline_graph: ocr_v2:my_pl
 pipeline_name: uriel/easyocr-r
 description: null
